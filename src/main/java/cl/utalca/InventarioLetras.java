@@ -30,5 +30,12 @@ public class InventarioLetras {
             }
         }
     }
+
+    public int size (){ //metodo que retorna el total de letras que se encontraron
+        return totalCount;
+    }
+    public boolean isEmpty (){ // metodo que retorna "true" si esta vacio el inventario
+        return nonZeroCount == 0;
+    }
 }
 
