@@ -38,9 +38,11 @@ public class InventarioLetras {
         return nonZeroCount == 0;
     }
     public int get(char letra){
-        letra = Character.toLowerCase(letra); //Convierte a minuscula
+
+        letra = Character.toLowerCase(letra); //Convierte a minúscula
+
         if (letra< 'a' || letra> 'z'){
-            throw new IllegalArgumentException("El carácter no es válido"); //Validacion
+            throw new IllegalArgumentException("El carácter no es válido"); //Validacíon
         }
         return counts[letra - 'a']; // Retorna cuantas veces aparece la letra
     }
@@ -58,6 +60,37 @@ public class InventarioLetras {
         resultado += "]";
 
         return resultado;
+    }
+    public char encriptarCesar ( char letra ){
+
+        letra = Character.toLowerCase(letra);
+
+        if (letra< 'a' || letra> 'z'){ //Valida la letra
+            throw new IllegalArgumentException("El carácter no es válido");
+        }
+        if(letra > 'w'){ // Si se pasa de 'z' vuelve al inicio
+            letra= (char)(letra - 23);
+        }
+        else{
+            letra = (char)(letra + 3); // Desplazamiento de César + 3
+        }
+        return letra;
+
+    }
+    public char desencriptarCesar (char letra){
+
+        letra = Character.toLowerCase(letra);
+
+        if (letra< 'a' || letra> 'z'){
+            throw new IllegalArgumentException("El carácter no es válido");
+        }
+        if(letra > 'd'){ // Si la letra es a, b o c, se mueve al final del abecedario
+            letra= (char)(letra + 23);
+        }
+        else{
+            letra = (char)(letra - 3); // Se retrocede las 3 posiciones
+        }
+        return letra;
     }
 }
 
