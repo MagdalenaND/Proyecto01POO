@@ -8,9 +8,9 @@ public class InventarioLetras {
     private int nonZeroCount; // Guarda la cantidad de letras distintas que hay
 
     public InventarioLetras(String data){
-        counts = new int[26]; // Arreglo de 26 posiciones (abcdario)
-        totalCount = 0;  //Inicializadores
-        nonZeroCount = 0;
+        this.counts = new int[26]; // Arreglo de 26 posiciones (abecedario)
+        this.totalCount = 0;  //Inicializadores
+        this.nonZeroCount = 0;
 
         data = data.toLowerCase(); //Convierte a minúscula
 
@@ -58,14 +58,14 @@ public class InventarioLetras {
         if(valor<0){
             throw new IllegalArgumentException("El valor no puede ser negativo");
         }
-        int indice = letra - 'a'; // Uso de ascii para la posicion
+        int indice = letra - 'a'; // Uso de ascii para la posición
 
         totalCount = totalCount - counts[indice]; // Se resta el valor anterior del total
 
-        if (counts[indice] == 0 && valor > 0) { // Si no existia la letra, y ahora tiene valor
+        if (counts[indice] == 0 && valor > 0) { // Si no existía la letra, y ahora tiene valor
             nonZeroCount++;                    //aumenta las letras distintas
         }
-        if (counts[indice] > 0 && valor == 0) { // Si existia la letra y ahora vale 0
+        if (counts[indice] > 0 && valor == 0) { // Si existía la letra y ahora vale 0
             nonZeroCount--;                    // disminuye letras distintas
         }
         counts[indice] = valor; // Se asigna el nuevo valor
@@ -136,10 +136,8 @@ public class InventarioLetras {
                     letra = (char)(letra + desplazamiento);
                 }
             }
-
             resultado += letra;
         }
-
         return resultado;
     }
 
@@ -163,6 +161,53 @@ public class InventarioLetras {
             resultado += letra;
         }
         return resultado;
+    }
+    public InventarioLetras amplifies (int n){
+        InventarioLetras nuevo = new InventarioLetras(""); //Nuevo inventario
+
+        for(int i = 0; i < 26; i++){
+            nuevo.counts[i] = this.counts[i] * n; // Nueva cantidad = la cantidad actual * n
+
+            if(nuevo.counts[i] > 0){ //Contar cuántas letras distintas tiene el nuevo inventario
+                nuevo.nonZeroCount++;
+            }
+            nuevo.totalCount = nuevo.totalCount + nuevo.counts[i]; //Cuenta el total de letras.
+        }
+        return nuevo;
+    }
+
+    public InventarioLetras add(InventarioLetras otro){
+        InventarioLetras nuevo = new InventarioLetras("");
+
+        for(int i = 0; i < 26; i++){
+            nuevo.counts[i] = this.counts[i] + otro.counts[i]; //Suma las cantidades
+
+            if(nuevo.counts[i] > 0){ // Si existe la letra, aumenta letras distintas
+                nuevo.nonZeroCount++;
+            }
+            nuevo.totalCount = nuevo.totalCount + nuevo.counts[i]; // Suma el total de letras
+        }
+        return nuevo;
+    }
+
+    public InventarioLetras subtract(InventarioLetras otro){
+        InventarioLetras nuevo = new InventarioLetras("");
+
+        for(int i = 0; i < 26; i++){
+            int resultado = this.counts[i] - otro.counts[i];
+
+            if(resultado < 0){ // Si queda negativo, retorna null
+                return null;
+            }
+            nuevo.counts[i] = resultado;
+
+            if(resultado > 0){  // Cuenta letras distintas
+                nuevo.nonZeroCount++;
+            }
+            nuevo.totalCount =
+                    nuevo.totalCount + resultado; // Suma al total
+        }
+        return nuevo;
     }
 }
 
